@@ -32,7 +32,7 @@
     <section id="musicScreen" class="screen music-screen">
       <div class="screen-heading"><span class="eyebrow">CHOOSE YOUR SOUNDTRACK</span><h2>اختاري صوت الرحلة</h2><p>كل أغنية ليها إحساس… اختاري اللي تحبي تبدأي بيه.</p></div>
       <div id="songGrid" class="song-grid"></div>
-      <div class="music-bottom"><p id="songHint">اختاري أغنية، وبعدها نبدأ رحلتنا.</p><button id="beginJourney" class="pill-button" disabled>نبدأ الرحلة <span>✦</span></button></div>
+      <div class="music-bottom"><p id="songHint">اختاري أغنية لو حابة، أو ابدئي الرحلة من غير موسيقى.</p><button id="beginJourney" class="pill-button">ابدئي الرحلة حتى من غير أغنية <span>✦</span></button></div>
     </section>
 
     <section id="universe" class="screen universe-screen">
@@ -52,16 +52,13 @@
 
     <section id="secretReveal" class="screen secret-reveal"><div class="blur-wash"></div><div class="reveal-card"><span class="eyebrow">JUST FOR YOU</span><p class="reveal-message">انا مين بنت هحبها قدك يا قمر<br>انتي اكتر بنت انا شايفها جميله ورقيقه وراقيه وشاطره وحلوه..اه بقره احيانا مش بتفكري بس انا كمان بعند فادينا بنشيل بعض<br>المهم اني بحبك قوي قوي يا اغلي من اغلي حاجه عندي ربنا يخليكي ليا لاخر الدنيا 🫀✨<br><br>بس ده مش معناه ان اللي انتي داخلاله ده هيعجبك 🙂</p><button id="enterPranks" class="pill-button green">دخول <span>↗</span></button></div></section>
 
-    <section id="pranksScreen" class="screen pranks-screen"><button class="back-link" id="backFromPranks">← رجوع للسماء</button><div class="pranks-placeholder"><span class="eyebrow">THE HIDDEN ROOM</span><h2>غرفة التغفيلات</h2><p id="pranksIntro">المكان متجهز في تصميم المشروع، لكن محتوى التغفيلات نفسه لسه مستني الملف اللي هتبعته.</p><div id="pranksList" class="room-list"></div><div class="locked-mark" id="pranksLocked">✦ <span>COMING WHEN THE MEMORIES ARE READY</span></div></div></section>
-
-    <section id="endingScreen" class="screen ending-screen"><div class="ending-card"><span class="eyebrow">THE LAST LETTER</span><h2>حبي زي الشمس<br><em>وانتي القمر بليل</em></h2><div id="endingLetter" class="ending-letter"></div><div id="endingMontage" class="room-list"></div><div class="ending-actions"><button id="backToSky" class="pill-button">ارجعي للسماء <span>✦</span></button><button id="replayJourney" class="pill-button subtle-button">نعيد الرحلة <span>↺</span></button></div></div></section>
+    <section id="pranksScreen" class="screen pranks-screen"><button class="back-link" id="backFromPranks">← رجوع للسماء</button><div class="pranks-placeholder"><span class="eyebrow">THE HIDDEN ROOM</span><h2>غرفة التغفيلات</h2><p>المكان متجهز في تصميم المشروع، لكن محتوى التغفيلات نفسه لسه مستني الملف اللي هتبعته.</p><div class="locked-mark">✦ <span>COMING WHEN THE MEMORIES ARE READY</span></div></div></section>
   </main>
 
   <div id="sceneModal" class="scene-modal" aria-hidden="true"><div class="scene-backdrop"></div><div class="scene-window"><button id="closeScene" class="icon-button close-scene" aria-label="إغلاق المشهد">×</button><div class="scene-media" id="sceneMedia"></div><div class="scene-copy"><span class="eyebrow" id="sceneEyebrow">A MEMORY</span><h2 id="sceneTitle"></h2><p id="sceneText"></p><div id="sceneExtra"></div><div class="scene-actions"><button id="revealSceneText" class="pill-button subtle-button">افتحي الذكرى <span>✧</span></button><button id="nextScene" class="pill-button">كمّلي <span>↗</span></button></div></div></div></div>
 
   <div id="toast" class="toast" role="status"></div>
-  <div id="miniPlayer" class="mini-player hidden"><button id="miniPlay" class="player-play" aria-label="تشغيل أو إيقاف">▶</button><div class="player-track"><strong id="nowPlaying">اختاري أغنية</strong><small id="playerArtist">KEROLA soundtrack</small><div class="fake-progress" id="playerBar"><i id="fakeProgress"></i></div></div><button id="expandPlayer" class="player-more" aria-label="فتح قائمة الأغاني">⌃</button></div>
-  <div id="playlistSheet" class="playlist-sheet hidden"><div class="sheet-head"><div><span class="eyebrow">YOUR SOUNDTRACK</span><h3>الأغاني</h3></div><button id="closePlaylist" class="icon-button" aria-label="إغلاق القائمة">×</button></div><div class="volume-row"><span aria-hidden="true">♪</span><input id="volume" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="مستوى الصوت"></div><div id="playlistRows"></div><p class="music-note">الأغاني اللي عليها «بحث» بتتفتح برا الموقع، والباقي بيشتغل هنا.</p></div>
-  <script src="content.js"></script>
+  <div id="miniPlayer" class="mini-player hidden"><button id="miniPlay" class="player-play" aria-label="تشغيل أو إيقاف">▶</button><div class="player-track"><strong id="nowPlaying">اختاري أغنية</strong><small id="playerArtist">KEROLA soundtrack</small><div class="fake-progress"><i id="fakeProgress"></i></div></div><button id="expandPlayer" class="player-more" aria-label="فتح قائمة الأغاني">⌃</button></div>
+  <div id="playlistSheet" class="playlist-sheet hidden"><div class="sheet-head"><div><span class="eyebrow">YOUR SOUNDTRACK</span><h3>الأغاني</h3></div><button id="closePlaylist" class="icon-button" aria-label="إغلاق القائمة">×</button></div><div id="playlistRows"></div><p class="music-note">للتشغيل داخل الموقع، ضعي ملفات الصوت المصرّح باستخدامها داخل <code>assets/audio/</code> بأسماء الملفات الموضحة في README. حاليًا زر الأغنية يفتح صفحة بحث للاستماع إليها.</p></div>
   <script src="app.js"></script>
 </body></html>
