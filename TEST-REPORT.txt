@@ -1,28 +1,10 @@
-KEROLA — interaction test report
+KEROLA Fresh Rebuild - static checks
 
-Test method: Chromium browser automation with the actual HTML, CSS, and JavaScript inlined for an isolated offline interaction run.
-Viewports tested: 390x844 (mobile), 1280x800 (desktop).
-
-PASS
-- Initial intro screen is visible.
-- Envelope opens password screen.
-- Incorrect main password displays the expected first message.
-- Correct main password opens soundtrack screen.
-- Eight soundtrack choices render.
-- Journey starts without selecting a song.
-- Selecting a song enables/keeps the journey start flow working.
-- Pause/resume animation button toggles body paused state.
-- All six star buttons open their intended scene.
-- Scene reveal and next-scene navigation work.
-- 23 memory cards render and open a memory; return-to-archive works.
-- Six star-map entries render and open a scene.
-- Four incorrect secret-password messages display in order.
-- Correct secret password opens the reveal screen.
-- Reveal button opens the hidden-room screen; return button works.
-- No JavaScript page errors or console errors in the tested flows.
-- HTML IDs are unique.
-- Every referenced photo/video path exists in the package.
-
-KNOWN LIMITATION
-- The eight MP3 files are not present in the source archive. The playlist can still be browsed and the journey works without music, but in-page playback requires adding authorized audio files to assets/audio using the documented names.
-- The hidden room is intentionally a placeholder until its content is supplied.
+- Original numbered media files included: 24 (17 photos + 7 videos).
+- Explicit exclusions 21, 22, 24, 26: not included as memory cards.
+- Every included media ID appears exactly once in the JavaScript memory list.
+- Correct password: kerola.
+- Secret password: rolaa.
+- Fourth main incorrect-password message: "الصبر ليه حدود هاااااا".
+- Video elements are created only when a video memory is explicitly opened; cards use still poster images.
+- Browser interaction test was not available in this build environment; test on mobile after publishing.
