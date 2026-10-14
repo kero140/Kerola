@@ -1,74 +1,64 @@
 # KEROLA — Our Little Universe
 
-A mobile-first, cinematic romantic memory website made with plain HTML, CSS and JavaScript. No backend, no paid API, and no build step required.
+A mobile-first, cinematic romantic memory website made with plain HTML, CSS and JavaScript. No backend, no paid API, no build step.
+
+## Deploy on GitHub Pages (free)
+
+1. Upload the project files to the repository (`index.html`, `style.css`, `app.js`, `content.js`, `.nojekyll`, `README.md` and the `assets/` folder).
+2. Repository **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to **Deploy from a branch**, pick branch `main` and folder `/ (root)`, then **Save**.
+4. After a minute the site is live at `https://<username>.github.io/<repo>/`.
+
+`.nojekyll` tells GitHub Pages to serve the files as-is. All paths are relative, so the site works from a repo sub-path.
 
 ## Preview locally
 
-Open `index.html` in a modern browser. For best video/audio behavior, serve the folder through a local static server or deploy it to Vercel.
+Serve the folder with any static server (for example `python3 -m http.server`) and open `http://localhost:8000`. Opening `index.html` directly works for the layout, but audio detection needs a server.
 
-## Deploy to Vercel for free
+## Filling in the personal content: `content.js`
 
-1. Upload the contents of this folder to a new GitHub repository.
-2. In Vercel, choose **Add New → Project** and import that repository.
-3. Keep the framework preset as **Other**. No build command is required; set the output directory to `.` if asked.
-4. Deploy. This is a static site; no environment variables are required.
+Everything that still needs your own words lives in one file, `content.js`. Empty fields show a quiet placeholder.
 
-## Included memories
+- `finalLetter` — the final letter text (blank line between paragraphs).
+- `finalMontage` — memory numbers, in order, for the closing montage.
+- `hiddenRoom` — items for the hidden room (title, text, optional photo/video from `assets`).
+- `clips` — short music clips tied to a line and a scene.
 
-Photos and videos are taken from the uploaded `web.rar`. Files numbered **21, 22, 24 and 26** were intentionally excluded as requested. Images were converted to WebP and videos compressed to H.264/AAC for faster loading. Video playback is user-initiated; only metadata is preloaded in memory cards.
+## Media
+
+Photos and videos share one numbering. Numbers **21, 22, 24 and 26** are intentionally excluded.
+
+- `assets/photos/` — WebP: 01 04 07 08 09 10 11 12 13 14 17 18 19 20 23 27 28
+- `assets/videos/` — H.264/AAC: 02 03 05 06 15 16 25
+- `assets/audio/` — present: 02, 04, 05, 06, 08. **Missing: 01, 03, 07.**
+
+For the missing songs, add files you have the right to use with these exact names and they will play inside the site automatically:
+
+- `assets/audio/01-ama-brawa.mp3`
+- `assets/audio/03-ala-ramsh-oyonha.mp3`
+- `assets/audio/07-fady-shwaya.mp3`
+
+Until then those tracks show a "search" label and open a search outside the site. Check rights before making the site public.
 
 ## Passwords
 
 - Main experience: `kerola`
 - Hidden moon room: `rolaa`
 
-These are story interactions, not real security. Anyone who can inspect public website source can find client-side passwords. Do not publish highly private material if you need actual access control.
+These are story interactions, not security. Anyone who can inspect the page source can find them. Don't publish material that needs real access control.
 
-## Music setup
+## How it behaves
 
-The playlist includes the eight requested tracks:
-1. أما براوة — نجاة الصغيرة
-2. القريب منك بعيد — نجاة الصغيرة
-3. على رمش عيونها — وديع الصافي
-4. حبيبتي ملاك — عمرو دياب
-5. على حبك — عمرو دياب
-6. قمرين — عمرو دياب
-7. فاضي شوية — حمزة نمرة
-8. ما تيجي أعدي عليكي — توو ليت
-
-No song files were present in the uploaded archive. For local playback, add audio files you have permission to use under `assets/audio/` with these names:
-
-- `01-ama-brawa.mp3`
-- `02-el-areeb-menk-baeed.mp3`
-- `03-ala-ramsh-oyonha.mp3`
-- `04-habibty-malak.mp3`
-- `05-ala-hobak.mp3`
-- `06-qamarain.mp3`
-- `07-fady-shwaya.mp3`
-- `08-mateegy-ada3y-aleiky.mp3`
-
-The player checks for these local files at startup. If a file exists, the mini-player plays it and supports pause/progress; if it is missing, the track opens a YouTube search instead of pretending a remote link is a local audio file. Use official/authorized audio sources and check rights before making the website public.
-
-## Current content still awaiting your final material
-
-- The full set of additional short song snippets and which memory each belongs to.
-- The separate hidden-room / prank content file.
-- The final letter text and the preferred order of the final montage.
-- Any extra photos/videos not included in `web.rar`.
-
-## Performance notes
-
-- Images are WebP, scaled to a maximum 1800 px long edge.
-- Videos are compressed to H.264/AAC with fast-start metadata for streaming playback.
-- The sky uses a lightweight canvas starfield and CSS lighting rather than a heavy 3D library.
-- The site respects `prefers-reduced-motion`; the pause button also pauses CSS animation.
-- Progress is stored in localStorage on the current browser/device. Clearing browser data can erase it; there is no cross-device sync.
+- Envelope → password → choose a song → star map with six memory places → closing scene.
+- The last star unlocks after the other five have been opened.
+- Music starts only after the user taps (a song is chosen and "begin" is pressed). The mini-player has play/pause, seek, a track list and volume.
+- Progress (visited stars, volume) is stored in `localStorage` on the current browser only.
+- Respects `prefers-reduced-motion`; the pause button also stops animation.
 
 ## Files
 
-- `index.html` — screens and page structure
-- `style.css` — cinematic styling and responsive motion
-- `app.js` — password flows, scene navigation, star map, playlist and local progress
-- `assets/photos/` — optimized memory images
-- `assets/videos/` — optimized memory clips
-- `assets/audio/` — add authorized audio files here
+- `index.html` — screens and structure
+- `style.css` — styling and motion
+- `app.js` — flows, scenes, star map, player, progress
+- `content.js` — your letter, montage order, hidden-room items, short clips
+- `assets/` — photos, videos and audio (never deleted or replaced by the build)
