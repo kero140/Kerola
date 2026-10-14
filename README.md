@@ -15,7 +15,7 @@ A fresh mobile-first static website for the KEROLA memory journey. It uses plain
 These are story passwords only, not real security. A public static website cannot keep client-side passwords secret from someone inspecting its source.
 
 ## Preserved memories and soundtrack
-The photo/video files from the previous project were carried over. The archive has 23 memory cards (numbered 01–20, 23, 27, 28) and the same eight requested songs:
+The photo/video files from the previous project were carried over. The archive uses all 24 available media files: 17 photos and 7 videos (numbered 01–20, 23, 25, 27, 28). Video poster thumbnails are included so the gallery has a real preview for every clip. and the same eight requested songs:
 1. أما براوة — نجاة الصغيرة
 2. القريب منك بعيد — نجاة الصغيرة
 3. على رمش عيونها — وديع الصافي
@@ -39,7 +39,7 @@ If a local track isn't present, choosing it opens YouTube search results instead
 
 ## Interaction and mobile behavior
 - No envelope is used. The opening action is a standalone button with its own screen transition.
-- No video elements are present in the memory grid. A video is inserted only after the user opens a memory and taps its explicit play placeholder.
+- The memory grid uses poster thumbnails for videos; opening a video memory shows native controls and does not autoplay. Photos open large in the memory viewer, with previous/next navigation and a position counter.
 - All major buttons have separated hit areas; responsive layouts account for small screens and safe-area insets.
 - The moon secret page has its own password and preserves the previously agreed incorrect-password messages.
 - The hidden room is a placeholder until its custom prank content is supplied.
@@ -54,4 +54,4 @@ If a local track isn't present, choosing it opens YouTube search results instead
 - `assets/audio/` — currently empty except for instructions
 
 ## Important verification note
-The source files were checked for JavaScript syntax and referenced asset paths in the build process. This environment could not complete an actual browser navigation test, so please verify the newly published copy on a phone before sharing it. This version is separate from and does not overwrite the previous project.
+The source files were checked for JavaScript syntax, and all 24 original media files plus all 7 generated video posters are present. This environment could not complete an actual browser navigation test, so please verify the newly published copy on a phone before sharing it. This version is separate from and does not overwrite the previous project.
