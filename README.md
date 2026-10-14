@@ -1,32 +1,21 @@
-# KEROLA — Our Little Universe
+# KEROLA — Rebuilt from zero
 
-A mobile-first, cinematic romantic memory website made with plain HTML, CSS and JavaScript. No backend, no paid API, and no build step required.
+A fresh mobile-first static website for the KEROLA memory journey. It uses plain HTML, CSS, and JavaScript, with no backend, account, build step, or paid service.
 
-## Preview locally
-
-Open `index.html` in a modern browser. For best video/audio behavior, serve the folder through a local static server or deploy it to Vercel.
-
-## Deploy to Vercel for free
-
-1. Upload the contents of this folder to a new GitHub repository.
-2. In Vercel, choose **Add New → Project** and import that repository.
-3. Keep the framework preset as **Other**. No build command is required; set the output directory to `.` if asked.
-4. Deploy. This is a static site; no environment variables are required.
-
-## Included memories
-
-Photos and videos are taken from the uploaded `web.rar`. Files numbered **21, 22, 24 and 26** were intentionally excluded as requested. Images were converted to WebP and videos compressed to H.264/AAC for faster loading. Video playback is user-initiated; only metadata is preloaded in memory cards.
+## Publish to GitHub Pages
+1. Create a **new repository** so the old version stays untouched.
+2. Upload the **contents of this folder** directly to the repository root. Make sure `index.html`, `style.css`, `app.js`, `.nojekyll`, and `assets/` are at the root level (not inside an extra nested folder).
+3. In the repository, open **Settings → Pages** and publish from the `main` branch and `/ (root)`.
+4. Open the published URL in Chrome/Safari and refresh once.
 
 ## Passwords
+- Main entry: `kerola`
+- Hidden moon page: `rolaa`
 
-- Main experience: `kerola`
-- Hidden moon room: `rolaa`
+These are story passwords only, not real security. A public static website cannot keep client-side passwords secret from someone inspecting its source.
 
-These are story interactions, not real security. Anyone who can inspect public website source can find client-side passwords. Do not publish highly private material if you need actual access control.
-
-## Music setup
-
-The playlist includes the eight requested tracks:
+## Preserved memories and soundtrack
+The photo/video files from the previous project were carried over. The archive has 23 memory cards (numbered 01–20, 23, 27, 28) and the same eight requested songs:
 1. أما براوة — نجاة الصغيرة
 2. القريب منك بعيد — نجاة الصغيرة
 3. على رمش عيونها — وديع الصافي
@@ -36,8 +25,7 @@ The playlist includes the eight requested tracks:
 7. فاضي شوية — حمزة نمرة
 8. ما تيجي أعدي عليكي — توو ليت
 
-No song files were present in the uploaded archive. For local playback, add audio files you have permission to use under `assets/audio/` with these names:
-
+**Audio files are not included** in the provided assets. If you own or have permission to use the audio, place the files in `assets/audio/` with the following names:
 - `01-ama-brawa.mp3`
 - `02-el-areeb-menk-baeed.mp3`
 - `03-ala-ramsh-oyonha.mp3`
@@ -47,36 +35,23 @@ No song files were present in the uploaded archive. For local playback, add audi
 - `07-fady-shwaya.mp3`
 - `08-mateegy-ada3y-aleiky.mp3`
 
-The player checks for these local files at startup. If a file exists, the mini-player plays it and updates progress; if it is missing, choosing the track from the playlist opens a YouTube search instead of pretending a remote link is a local audio file. **The journey can now start without selecting a song**, so missing music never blocks the site. Use official/authorized audio sources and check rights before making the website public.
+If a local track isn't present, choosing it opens YouTube search results instead of pretending it played locally. The journey can be started without selecting music.
 
-## Current content still awaiting your final material
+## Interaction and mobile behavior
+- No envelope is used. The opening action is a standalone button with its own screen transition.
+- No video elements are present in the memory grid. A video is inserted only after the user opens a memory and taps its explicit play placeholder.
+- All major buttons have separated hit areas; responsive layouts account for small screens and safe-area insets.
+- The moon secret page has its own password and preserves the previously agreed incorrect-password messages.
+- The hidden room is a placeholder until its custom prank content is supplied.
+- Scene progress is saved in the browser's local storage.
 
-- The full set of additional short song snippets and which memory each belongs to.
-- The separate hidden-room / prank content file.
-- The final letter text and the preferred order of the final montage.
-- Any extra photos/videos not included in `web.rar`.
+## Project files
+- `index.html` — page structure and separate screens
+- `style.css` — new design and responsive layout
+- `app.js` — passwords, soundtrack, scenes, memories, hidden room
+- `assets/photos/` — compressed memory photos
+- `assets/videos/` — memory clips
+- `assets/audio/` — currently empty except for instructions
 
-## Performance notes
-
-- Images are WebP, scaled to a maximum 1800 px long edge.
-- Videos are compressed to H.264/AAC with fast-start metadata for streaming playback.
-- The sky uses a lightweight canvas starfield and CSS lighting rather than a heavy 3D library.
-- The site respects `prefers-reduced-motion`; the pause button also pauses CSS animation.
-- Progress is stored in localStorage on the current browser/device. Clearing browser data can erase it; there is no cross-device sync.
-
-## Latest fixes and verification
-
-- The envelope opens the password screen, and the correct password opens the soundtrack screen.
-- The journey-start button is enabled even when no song is selected.
-- Browser-tested on mobile (390×844) and desktop (1280×800): envelope/password flow, song selection, journey start, pause/resume, all six star scenes, all 23 memory cards, star map, secret password messages, and hidden-room navigation. No JavaScript console errors were observed during those interaction tests.
-- Checked that HTML IDs are unique and that all photo/video paths referenced by the code exist.
-- Audio files are **not included** in this archive; add authorized MP3 files using the names above to enable in-page playback.
-
-## Files
-
-- `index.html` — screens and page structure
-- `style.css` — cinematic styling and responsive motion
-- `app.js` — password flows, scene navigation, star map, playlist and local progress
-- `assets/photos/` — optimized memory images
-- `assets/videos/` — optimized memory clips
-- `assets/audio/` — add authorized audio files here
+## Important verification note
+The source files were checked for JavaScript syntax and referenced asset paths in the build process. This environment could not complete an actual browser navigation test, so please verify the newly published copy on a phone before sharing it. This version is separate from and does not overwrite the previous project.

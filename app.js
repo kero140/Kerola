@@ -1,8 +1,20 @@
 (() => {
   'use strict';
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-  const screens = ['intro','passwordScreen','musicScreen','universe','secretScreen','secretReveal','pranksScreen'];
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const screenIds = ['welcome','passwordScreen','musicScreen','universe','memoriesScreen','secretScreen','secretReveal','pranksScreen'];
+  const wrongMain = [
+    'انا مكنتش متوقع انك مش هتعرفيه..خيبتي ظني',
+    'برضه مش عارفه انا حقيقي مصدوم',
+    'خلاص تعالي كلميني وحايليني شويه يمكن اقولك الباسوورد',
+    'قول كده كتير..الصبر ليه حدود هاااااا'
+  ];
+  const wrongSecret = [
+    'الباسوورد غلط يا رولا',
+    'طيب ما تفكري مره واحده..جربي فكره كده ايه اكتر بنت بحبها انا في الدنيا',
+    'يا رولا اكتر بنت بحبها..بنت زي القمر 😉🌕',
+    'اكيد جربتي اسمك واسم بنات تانيه كتير..بس خلاص هعفو عنك تعالي اساليني'
+  ];
   const songs = [
     {title:'أما براوة',artist:'نجاة الصغيرة',search:'نجاة الصغيرة أما براوة',file:'assets/audio/01-ama-brawa.mp3'},
     {title:'القريب منك بعيد',artist:'نجاة الصغيرة',search:'نجاة الصغيرة القريب منك بعيد',file:'assets/audio/02-el-areeb-menk-baeed.mp3'},
@@ -13,57 +25,107 @@
     {title:'فاضي شوية',artist:'حمزة نمرة',search:'حمزة نمرة فاضي شوية',file:'assets/audio/07-fady-shwaya.mp3'},
     {title:'ما تيجي أعدي عليكي',artist:'توو ليت',search:'توو ليت ما تيجي أعدي عليكي',file:'assets/audio/08-mateegy-ada3y-aleiky.mp3'}
   ];
-  const wrongMain = ['انا مكنتش متوقع انك مش هتعرفيه..خيبتي ظني','برضه مش عارفه انا حقيقي مصدوم','خلاص تعالي كلميني وحايليني شويه يمكن اقولك الباسوورد','قول كده كتير..الصبر ليه حدود هاااااا'];
-  const wrongSecret = ['الباسوورد غلط يا رولا','طيب ما تفكري مره واحده..جربي فكره كده ايه اكتر بنت بحبها انا في الدنيا','يا رولا اكتر بنت بحبها..بنت زي القمر 😉🌕','اكيد جربتي اسمك واسم بنات تانيه كتير..بس خلاص هعفو عنك تعالي اساليني'];
   const scenes = {
-    beginning:{chapter:'THE BEGINNING',title:'كل حاجة بدأت من تفصيلة',text:'في حاجات بتبدأ عادي جدًا… وبعدها بنكتشف إنها خدت مكان أكبر بكتير من اللي كنا متخيلينه.',media:'photo',src:'assets/photos/01.webp',reveal:'يمكن مش كل البدايات كانت مثالية، بس في صور بتفكرني قد إيه كنت مبسوط وأنا جنبك.',next:'littleThings'},
-    littleThings:{chapter:'THE LITTLE THINGS',title:'التفاصيل اللي محدش يفهمها غيرنا',text:'مش كل ذكرى محتاجة كلام كبير. ساعات حركة صغيرة أو إفيه بايخ هو اللي بيفضل عايش.',media:'video',src:'assets/videos/03.mp4',reveal:'انت مفهمتش صح… انا قصدي على القمر اللي جنبي. 🌙',next:'frames'},
-    frames:{chapter:'THE FRAMES',title:'أيام اتصورت… ولسه عايشة',text:'في صور بتثبت إننا كنا هناك، وفي صور بتفكرني أنا كنت حاسس بإيه وقتها.',media:'photo',src:'assets/photos/14.webp',reveal:'يوم السينما من الأيام اللي كنت حاسس فيها إني في أسعد لحظات حياتي.',next:'unsaid'},
-    unsaid:{chapter:'THE UNSAID',title:'حاجات اتقالت من غير كلام',text:'رسالة على ورقة، رسمة صغيرة، إيد جنب إيد… حاجات بسيطة بس مش بسيطة عندي.',media:'photo',src:'assets/photos/27.webp',reveal:'«وحياه عينيك وفداها عينيا..انا بحبك قد عينيا...🫀»',next:'sunMoon'},
-    sunMoon:{chapter:'THE SUN & THE MOON',title:'حبي زي الشمس… وانتي القمر بليل',text:'في لحظة هتسكت فيها النجوم شوية، عشان تسيب مكان للكلام اللي فضِل معايا.',media:'photo',src:'assets/photos/28.webp',reveal:'حبي زي الشمس وانتي القمر بليل 🌕\nمش مجرد جملة مكتوبة على هدية… دي واحدة من الحاجات اللي فضلت منورة جوايا.',next:'lastLetter'},
-    lastLetter:{chapter:'THE LAST LETTER',title:'لسه في حاجة أخيرة',text:'قبل ما الرحلة تهدى، في شوية لحظات عايزك تشوفيهم براحتك.',media:'video',src:'assets/videos/25.mp4',reveal:'هنا مكان الرسالة الأخيرة والفيلم النهائي. هنكمّل محتواهم لما تحدد نص الرسالة والترتيب النهائي.',next:'beginning'}
+    beginning:{chapter:'THE BEGINNING',title:'كل حاجة بدأت من تفصيلة',text:'في حاجات بتبدأ عادي جدًا… وبعدها بنكتشف إنها خدت مكان أكبر بكتير من اللي كنا متخيلينه.',type:'photo',src:'assets/photos/01.webp',reveal:'يمكن مش كل البدايات كانت مثالية، بس في صور بتفكرني قد إيه كنت مبسوط وأنا جنبك.',next:'littleThings'},
+    littleThings:{chapter:'THE LITTLE THINGS',title:'التفاصيل اللي محدش يفهمها غيرنا',text:'مش كل ذكرى محتاجة كلام كبير. ساعات حركة صغيرة أو إفيه بايخ هو اللي بيفضل عايش.',type:'video',src:'assets/videos/03.mp4',reveal:'انت مفهمتش صح… انا قصدي على القمر اللي جنبي. 🌙',next:'frames'},
+    frames:{chapter:'THE FRAMES',title:'أيام اتصورت… ولسه عايشة',text:'في صور بتثبت إننا كنا هناك، وفي صور بتفكرني أنا كنت حاسس بإيه وقتها.',type:'photo',src:'assets/photos/14.webp',reveal:'يوم السينما من الأيام اللي كنت حاسس فيها إني في أسعد لحظات حياتي.',next:'unsaid'},
+    unsaid:{chapter:'THE UNSAID',title:'حاجات اتقالت من غير كلام',text:'رسالة على ورقة، رسمة صغيرة، إيد جنب إيد… حاجات بسيطة بس مش بسيطة عندي.',type:'photo',src:'assets/photos/27.webp',reveal:'«وحياه عينيك وفداها عينيا..انا بحبك قد عينيا...🫀»',next:'sunMoon'},
+    sunMoon:{chapter:'THE SUN & THE MOON',title:'حبي زي الشمس… وانتي القمر بليل',text:'في لحظة هتسكت فيها النجوم شوية، عشان تسيب مكان للكلام اللي فضِل معايا.',type:'celestial',src:'',reveal:'حبي زي الشمس وانتي القمر بليل 🌕\nمش مجرد جملة مكتوبة على هدية… دي واحدة من الحاجات اللي فضلت منورة جوايا.',next:'lastLetter'},
+    lastLetter:{chapter:'THE LAST LETTER',title:'لسه في حاجة أخيرة',text:'قبل ما الرحلة تهدى، في شوية لحظات عايزك تشوفيهم براحتك.',type:'video',src:'assets/videos/25.mp4',reveal:'هنا مكان الرسالة الأخيرة والفيلم النهائي. هنكمّل محتواهم لما تحدد نص الرسالة والترتيب النهائي.',next:'beginning'}
   };
   const memories = [
     ['01','صورة متخيلة لينا','photo','assets/photos/01.webp'],['02','فتح الهدية','video','assets/videos/02.mp4'],['03','القمر اللي جنبي','video','assets/videos/03.mp4'],['04','إيد في إيد','photo','assets/photos/04.webp'],['05','أول مرة شفت الهدية','video','assets/videos/05.mp4'],['06','تفصيلة صغيرة','video','assets/videos/06.mp4'],['07','رولا وهي صغيرة','photo','assets/photos/07.webp'],['08','حلم صغير للمستقبل','photo','assets/photos/08.webp'],['09','فرحة في صورة','photo','assets/photos/09.webp'],['10','قبل ما نروح أي حتة','photo','assets/photos/10.webp'],['11','تذاكر السينما','photo','assets/photos/11.webp'],['12','الفشار','photo','assets/photos/12.webp'],['13','الكولا','photo','assets/photos/13.webp'],['14','بعد الفيلم','photo','assets/photos/14.webp'],['15','أول تجربة سوشي','video','assets/videos/15.mp4'],['16','ملاحظات البوسات','video','assets/videos/16.mp4'],['17','شطرة ومجتهدة','photo','assets/photos/17.webp'],['18','رسمة قديمة','photo','assets/photos/18.webp'],['19','نفس اليوم، نفس الدفء','photo','assets/photos/19.webp'],['20','وش صغير على صوابعنا','photo','assets/photos/20.webp'],['23','يوم سينما تاني','photo','assets/photos/23.webp'],['27','رسالة على ورقة صفراء','photo','assets/photos/27.webp'],['28','الهدية اللي فيها الشمس والقمر','photo','assets/photos/28.webp']
   ];
-  let selectedSong = null, mainTries = 0, secretTries = 0, currentScene = 'beginning', revealed = false, paused = false, memoryMode = false;
-  const audioPlayer = new Audio(); audioPlayer.preload = 'none'; let audioReady = Array(8).fill(false); let currentAudio = -1;
-  songs.forEach((song,i)=>fetch(song.file,{method:'HEAD'}).then(r=>{audioReady[i]=r.ok}).catch(()=>{audioReady[i]=false}));
-  audioPlayer.addEventListener('play',()=>$('#miniPlay').textContent='Ⅱ'); audioPlayer.addEventListener('pause',()=>$('#miniPlay').textContent='▶');
-  audioPlayer.addEventListener('timeupdate',()=>{if(audioPlayer.duration)$('#fakeProgress').style.width=(audioPlayer.currentTime/audioPlayer.duration*100)+'%'});
-  audioPlayer.addEventListener('ended',()=>{let next=-1;for(let i=currentAudio+1;i<audioReady.length;i++){if(audioReady[i]){next=i;break}}if(next>=0)playLocalTrack(next);else{audioPlayer.pause();toast('خلصت الأغنية. اختاري أغنية تانية من القائمة.')}});
-  let visited = new Set();
-  try { visited = new Set(JSON.parse(localStorage.getItem('kerolaVisited') || '[]')); } catch (_) { visited = new Set(); }
-  let secretUnlocked = false;
-  try { secretUnlocked = localStorage.getItem('kerolaSecretUnlocked') === 'yes'; } catch (_) {}
-  const assetExists = p => p;
-  function showScreen(id){screens.forEach(s=>$('#'+s).classList.toggle('active',s===id));window.scrollTo({top:0,behavior:'smooth'});}
-  function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),2600)}
-  function makeSongCard(song,i){const b=document.createElement('button');b.className='song-card'+(selectedSong===i?' selected':'');b.innerHTML=`<span class="song-number">TRACK ${String(i+1).padStart(2,'0')}</span><span class="song-check">✦</span><strong>${song.title}</strong><small>${song.artist}</small>`;b.addEventListener('click',()=>{selectedSong=i;$$('.song-card').forEach((el,j)=>el.classList.toggle('selected',j===i));$('#beginJourney').disabled=false;$('#songHint').textContent='اختيارك: '+song.title+' — '+song.artist;$('#nowPlaying').textContent=song.title;$('#playerArtist').textContent=song.artist;});return b;}
-  function buildSongs(){const g=$('#songGrid');songs.forEach((s,i)=>g.appendChild(makeSongCard(s,i)));const rows=$('#playlistRows');songs.forEach((s,i)=>{const b=document.createElement('button');b.className='playlist-row';b.innerHTML=`<span class="track-no">${String(i+1).padStart(2,'0')}</span><span class="track-info"><strong>${s.title}</strong><small>${s.artist}</small></span><span class="track-open">استماع ↗</span>`;b.addEventListener('click',()=>openSong(i));rows.appendChild(b)});}
-  function openSong(i){selectedSong=i;const s=songs[i];$('#nowPlaying').textContent=s.title;$('#playerArtist').textContent=s.artist;$('#miniPlayer').classList.remove('hidden');if(audioReady[i]){playLocalTrack(i)}else{window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(s.search),'_blank','noopener');toast('فتحنا نتائج الاستماع. ضيفي ملف الأغنية المصرّح بيه داخل assets/audio للتشغيل من المشغل.')}}
-  function playLocalTrack(i){const s=songs[i];if(!audioReady[i]){toast('ملف الأغنية مش موجود داخل assets/audio. اختاريها من القائمة لفتح مصدر الاستماع.');return}if(currentAudio!==i){audioPlayer.pause();audioPlayer.src=s.file;currentAudio=i}audioPlayer.play().then(()=>{selectedSong=i;$('#nowPlaying').textContent=s.title;$('#playerArtist').textContent=s.artist;$('#miniPlayer').classList.remove('hidden')}).catch(()=>toast('المتصفح منع التشغيل التلقائي؛ اضغطي تشغيل مرة تانية.'));}
-  function openScene(key){const s=scenes[key];if(!s)return;memoryMode=false;currentScene=key;revealed=false;visited.add(key);try{localStorage.setItem('kerolaVisited',JSON.stringify([...visited]));}catch(_){}$('#chapterName').textContent=s.chapter;$('#progressFill').style.width=(Math.max(1,visited.size)/Object.keys(scenes).length*100)+'%';$('#sceneEyebrow').textContent=s.chapter;$('#sceneTitle').textContent=s.title;$('#sceneText').textContent=s.text;$('#sceneText').classList.remove('revealed');$('#sceneText').classList.add('scene-hidden-text');$('#revealSceneText').style.display='';$('#revealSceneText').textContent='افتحي الذكرى ✧';$('#nextScene').innerHTML='كمّلي <span>↗</span>';const m=$('#sceneMedia');m.innerHTML='';if(key==='sunMoon'){const art=document.createElement('div');art.className='sun-moon-art';art.innerHTML='<div class="sun-halo"></div><div class="sun-disc"></div><div class="moon-disc"></div><div class="celestial-horizon"></div><div class="celestial-quote"><span>حبي زي الشمس</span><i>وانتي القمر بليل</i></div>';m.appendChild(art)}else if(s.media==='photo'){const img=document.createElement('img');img.src=s.src;img.alt=s.title;img.loading='eager';m.appendChild(img)}else{const v=document.createElement('video');v.src=s.src;v.controls=true;v.playsInline=true;v.preload='metadata';m.appendChild(v)}$('#sceneExtra').textContent='';$('#sceneModal').classList.add('open');$('#sceneModal').setAttribute('aria-hidden','false');document.body.classList.add('cinematic');}
-  function closeScene(){const v=$('#sceneMedia video');if(v)v.pause();$('#sceneModal').classList.remove('open');$('#sceneModal').setAttribute('aria-hidden','true');document.body.classList.remove('cinematic')}
-  function revealScene(){if(revealed){return}revealed=true;const s=scenes[currentScene];$('#sceneText').textContent=s.reveal;$('#sceneText').classList.add('revealed');$('#revealSceneText').textContent='الذكرى اتفتحت ✓';$('#nextScene').innerHTML='للذكرى اللي بعدها <span>↗</span>';}
-  function renderMemories(){const b=$('#panelBody');b.innerHTML='<div class="memory-grid"></div>';const grid=b.firstElementChild;memories.forEach(([id,title,type,src])=>{const c=document.createElement('button');c.className='memory-card';const media=type==='photo'?document.createElement('img'):document.createElement('video');media.src=src;media.loading='lazy';if(type==='video'){media.muted=true;media.preload='metadata';media.playsInline=true}else media.alt=title;c.appendChild(media);const span=document.createElement('span');span.textContent=title;c.appendChild(span);const small=document.createElement('small');small.textContent='ذكرى رقم '+id;c.appendChild(small);c.addEventListener('click',()=>{closePanel();openMemory(id,title,type,src)});grid.appendChild(c)});}
-  function openMemory(id,title,type,src){memoryMode=true;$('#sceneEyebrow').textContent='MEMORY '+id;$('#sceneTitle').textContent=title;$('#sceneText').textContent='';$('#sceneText').classList.remove('scene-hidden-text','revealed');$('#revealSceneText').style.display='none';$('#nextScene').innerHTML='رجوع للذكريات <span>↗</span>';$('#sceneExtra').textContent='';const m=$('#sceneMedia');m.innerHTML='';if(type==='photo'){const img=document.createElement('img');img.src=src;img.alt=title;m.appendChild(img)}else{const v=document.createElement('video');v.src=src;v.controls=true;v.playsInline=true;v.preload='metadata';m.appendChild(v)}$('#sceneModal').classList.add('open');$('#sceneModal').setAttribute('aria-hidden','false');document.body.classList.add('cinematic');}
-  function closePanel(){$('#panel').classList.add('hidden')}
-  function openPanel(type){$('#panel').classList.remove('hidden');if(type==='memories'){$('#panelEyebrow').textContent='MEMORY ARCHIVE';$('#panelTitle').textContent='الذكريات اللي عاشت';renderMemories()}else{$('#panelEyebrow').textContent='STAR MAP';$('#panelTitle').textContent='خريطة النجوم';const b=$('#panelBody');b.innerHTML='<div class="map-grid"></div>';const g=b.firstElementChild;Object.entries(scenes).forEach(([key,s],i)=>{const c=document.createElement('button');c.className='map-star';c.innerHTML=`<span>${visited.has(key)?'✦':'✧'}</span>${s.title}`;c.addEventListener('click',()=>{closePanel();openScene(key)});g.appendChild(c)})}}
-  $('#openEnvelope').addEventListener('click',()=>{const e=$('#openEnvelope');if(e.classList.contains('opening'))return;e.classList.add('opening');setTimeout(()=>{showScreen('passwordScreen');$('#mainPassword').focus({preventScroll:true})},650)});
-  $('#mainPasswordForm').addEventListener('submit',e=>{e.preventDefault();const v=$('#mainPassword').value.trim().toLowerCase();if(v==='kerola'){showScreen('musicScreen');$('#mainPasswordMessage').textContent='';return}$('#mainPasswordMessage').textContent=wrongMain[Math.min(mainTries,wrongMain.length-1)];mainTries++;$('#mainPassword').value='';$('#mainPassword').animate([{transform:'translateX(0)'},{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:220});});
-  $('#beginJourney').addEventListener('click',()=>{if(selectedSong!==null){$('#miniPlayer').classList.remove('hidden');$('#nowPlaying').textContent=songs[selectedSong].title;$('#playerArtist').textContent=songs[selectedSong].artist;}else{$('#miniPlayer').classList.add('hidden')}showScreen('universe');toast('الرحلة بدأت… خدي وقتك يا رولا');});
-  $('#followLight').addEventListener('click',()=>openScene('beginning'));$$('.orbit-star').forEach(b=>b.addEventListener('click',()=>openScene(b.dataset.scene)));
-  $$('.nav-item').forEach(b=>b.addEventListener('click',()=>{$$('.nav-item').forEach(n=>n.classList.toggle('selected',n===b));if(b.dataset.tab==='journey'){closePanel();return}openPanel(b.dataset.tab)}));
-  $('#closePanel').addEventListener('click',closePanel);$('#closeScene').addEventListener('click',closeScene);$('#sceneModal').addEventListener('click',e=>{if(e.target===$('#sceneModal')||e.target.classList.contains('scene-backdrop'))closeScene()});$('#revealSceneText').addEventListener('click',revealScene);$('#nextScene').addEventListener('click',()=>{if(memoryMode){closeScene();$('#panel').classList.remove('hidden');$('#panelEyebrow').textContent='MEMORY ARCHIVE';$('#panelTitle').textContent='ذكرياتنا';renderMemories();return}const s=scenes[currentScene];if(!revealed){revealScene();return}closeScene();if(s&&s.next)openScene(s.next)});
-  $('#pauseJourney').addEventListener('click',()=>{paused=!paused;document.body.classList.toggle('paused',paused);$('#pauseJourney').textContent=paused?'▶':'Ⅱ';$('#pauseJourney').setAttribute('aria-label',paused?'استئناف الحركة':'إيقاف الحركة مؤقتًا');toast(paused?'الحركة اتوقفت مؤقتًا':'رجعنا نتحرك')});
-  $('#secretMoon').addEventListener('click',()=>{secretTries=0;$('#secretPasswordMessage').textContent='';$('#secretPassword').value='';showScreen('secretScreen')});$('#backFromSecret').addEventListener('click',()=>showScreen('universe'));
-  $('#secretPasswordForm').addEventListener('submit',e=>{e.preventDefault();const v=$('#secretPassword').value.trim().toLowerCase();if(v==='rolaa'){secretUnlocked=true;try{localStorage.setItem('kerolaSecretUnlocked','yes')}catch(_){}showScreen('secretReveal');return}$('#secretPasswordMessage').textContent=wrongSecret[Math.min(secretTries,wrongSecret.length-1)];secretTries++;$('#secretPassword').value='';});
-  $('#enterPranks').addEventListener('click',()=>showScreen('pranksScreen'));$('#backFromPranks').addEventListener('click',()=>showScreen('universe'));
-  $('#miniPlay').addEventListener('click',()=>{if(selectedSong===null){toast('اختاري أغنية الأول');showScreen('musicScreen');return}if(audioReady[selectedSong]){if(audioPlayer.paused)playLocalTrack(selectedSong);else audioPlayer.pause()}else openSong(selectedSong)});$('#expandPlayer').addEventListener('click',()=>$('#playlistSheet').classList.toggle('hidden'));$('#closePlaylist').addEventListener('click',()=>$('#playlistSheet').classList.add('hidden'));
-  // Cinematic, responsive starfield with gentle parallax and reduced-motion support.
-  const canvas=$('#starCanvas'),ctx=canvas.getContext('2d');let stars=[],w=0,h=0,dpr=1,pointer={x:0,y:0};const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function resize(){dpr=Math.min(window.devicePixelRatio||1,2);w=window.innerWidth;h=window.innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);const count=Math.min(210,Math.floor(w*h/5200));stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.35+.25,a:Math.random()*.65+.18,p:Math.random()*Math.PI*2,s:Math.random()*.012+.002,depth:Math.random()}));}
-  function draw(){ctx.clearRect(0,0,w,h);for(const s of stars){const tw=reduced?1:(.65+Math.sin(s.p)*.35);const x=s.x+(pointer.x-.5)*s.depth*10;const y=s.y+(pointer.y-.5)*s.depth*8;ctx.beginPath();ctx.arc(x,y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(245,239,255,${s.a*tw})`;ctx.fill();if(s.r>1.1){ctx.beginPath();ctx.moveTo(x-s.r*2.7,y);ctx.lineTo(x+s.r*2.7,y);ctx.moveTo(x,y-s.r*2.7);ctx.lineTo(x,y+s.r*2.7);ctx.strokeStyle=`rgba(222,211,255,${s.a*.28*tw})`;ctx.lineWidth=.5;ctx.stroke()}if(!paused)s.p+=s.s}if(!reduced)requestAnimationFrame(draw)}
-  window.addEventListener('resize',resize);window.addEventListener('pointermove',e=>{pointer.x=e.clientX/w;pointer.y=e.clientY/h},{passive:true});resize();draw();buildSongs();
+  let mainTries=0, secretTries=0, selectedSong=null, currentAudio=-1, paused=false, currentScene='beginning', revealed=false, memoryMode=false, soundEnabled=true;
+  const audio = new Audio(); audio.preload='none';
+  const visited = new Set();
+  try { JSON.parse(localStorage.getItem('kerolaVisited')||'[]').forEach(k=>visited.add(k)); } catch (_) {}
+  const availableSongs = new Set();
+  const toastTimer = {id:null};
+
+  function showScreen(id){
+    screenIds.forEach(name=>$('#'+name).classList.toggle('active',name===id));
+    $('#sceneModal').classList.remove('open'); $('#sceneModal').setAttribute('aria-hidden','true');
+    document.body.classList.remove('cinematic');
+    const video=$('#sceneMedia video'); if(video)video.pause();
+    window.scrollTo({top:0,behavior:'auto'});
+    if(id==='passwordScreen') setTimeout(()=>$('#mainPassword').focus({preventScroll:true}),100);
+  }
+  function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer.id);toastTimer.id=setTimeout(()=>t.classList.remove('show'),2600)}
+  function setProgress(){const n=Object.keys(scenes).filter(k=>visited.has(k)).length;$('#progressFill').style.width=(n/6*100)+'%';$('#progressLabel').textContent=n+' / 6'}
+  function playSong(i){
+    const song=songs[i]; selectedSong=i; updatePlayer(song); $('#miniPlayer').classList.remove('hidden');
+    if(availableSongs.has(i)){
+      if(currentAudio!==i){audio.pause();audio.src=song.file;currentAudio=i;}
+      audio.play().then(()=>{updatePlayer(song);}).catch(()=>toast('اضغطي تشغيل مرة تانية لو المتصفح منع الصوت.'));
+    } else {
+      window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(song.search),'_blank','noopener,noreferrer');
+      toast('ملف الأغنية مش موجود محليًا؛ فتحنا نتائج الاستماع.');
+    }
+  }
+  function updatePlayer(song){$('#nowPlaying').textContent=song.title;$('#playerArtist').textContent=song.artist;$('#miniPlayer').classList.remove('hidden');}
+  function buildSongs(){
+    const grid=$('#songGrid'), rows=$('#playlistRows');
+    songs.forEach((s,i)=>{
+      const card=document.createElement('button');card.type='button';card.className='song-card';card.innerHTML=`<span class="track">TRACK ${String(i+1).padStart(2,'0')}</span><span class="check">✧</span><strong></strong><small></small>`;$('.song-card strong',card).textContent=s.title;$('.song-card small',card).textContent=s.artist;
+      card.addEventListener('click',()=>{selectedSong=i;$$('.song-card').forEach((c,j)=>{c.classList.toggle('selected',j===i);$('.check',c).textContent=j===i?'✦':'✧'});updatePlayer(s);$('#songGrid').dataset.selected=String(i);toast('اختيارك: '+s.title)});grid.appendChild(card);
+      const row=document.createElement('button');row.type='button';row.className='playlist-row';row.innerHTML=`<span class="track-no">${String(i+1).padStart(2,'0')}</span><span class="track-info"><strong></strong><small></small></span><span class="track-open">استماع ↗</span>`;$('.track-info strong',row).textContent=s.title;$('.track-info small',row).textContent=s.artist;row.addEventListener('click',()=>playSong(i));rows.appendChild(row);
+      fetch(s.file,{method:'HEAD'}).then(r=>{if(r.ok)availableSongs.add(i)}).catch(()=>{});
+    });
+  }
+  function renderSceneMedia(scene){
+    const holder=$('#sceneMedia');holder.replaceChildren();
+    if(scene.type==='celestial'){
+      const art=document.createElement('div');art.className='celestial-art';art.innerHTML='<div class="celestial-sun"></div><div class="celestial-moon"></div><div class="celestial-caption"><span>حبي زي الشمس</span><em>وانتي القمر بليل</em></div>';holder.appendChild(art);return;
+    }
+    if(scene.type==='photo'){
+      const img=document.createElement('img');img.src=scene.src;img.alt=scene.title;img.decoding='async';holder.appendChild(img);return;
+    }
+    const wrap=document.createElement('div');wrap.className='video-thumb';wrap.innerHTML='<span>▶</span><small>اضغطي لتشغيل الفيديو</small>';wrap.setAttribute('role','button');wrap.setAttribute('tabindex','0');
+    const activate=()=>{const video=document.createElement('video');video.src=scene.src;video.controls=true;video.playsInline=true;video.preload='metadata';video.setAttribute('controlsList','nodownload');holder.replaceChildren(video);video.play().catch(()=>{});};wrap.addEventListener('click',activate);wrap.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});holder.appendChild(wrap);
+  }
+  function openScene(key){
+    const scene=scenes[key];if(!scene)return;currentScene=key;revealed=false;memoryMode=false;visited.add(key);try{localStorage.setItem('kerolaVisited',JSON.stringify([...visited]));}catch(_){}setProgress();
+    $('#sceneEyebrow').textContent=scene.chapter;$('#sceneTitle').textContent=scene.title;$('#sceneText').textContent=scene.text;$('#revealSceneText').classList.remove('hidden');$('#revealSceneText').textContent='افتحي الذكرى ✧';$('#nextScene').innerHTML='كمّلي <b>↙</b>';renderSceneMedia(scene);$('#sceneModal').classList.add('open');$('#sceneModal').setAttribute('aria-hidden','false');document.body.classList.add('cinematic');$('#closeScene').focus({preventScroll:true});
+  }
+  function revealScene(){if(revealed)return;revealed=true;$('#sceneText').textContent=scenes[currentScene].reveal;$('#revealSceneText').textContent='الذكرى اتفتحت ✓';$('#nextScene').innerHTML='للذكرى اللي بعدها <b>↙</b>';}
+  function closeScene(){const v=$('#sceneMedia video');if(v)v.pause();$('#sceneModal').classList.remove('open');$('#sceneModal').setAttribute('aria-hidden','true');document.body.classList.remove('cinematic');}
+  function renderMemories(){
+    const grid=$('#memoryGrid');grid.replaceChildren();
+    memories.forEach(([id,title,type,src])=>{
+      const card=document.createElement('button');card.type='button';card.className='memory-card';
+      if(type==='photo'){const img=document.createElement('img');img.src=src;img.alt=title;img.loading='lazy';img.decoding='async';card.appendChild(img)}else{const thumb=document.createElement('span');thumb.className='video-thumb';thumb.innerHTML='<span>▶</span>';thumb.setAttribute('aria-hidden','true');card.appendChild(thumb)}
+      const strong=document.createElement('strong');strong.textContent=title;const small=document.createElement('small');small.textContent='ذكرى رقم '+id;card.append(strong,small);card.addEventListener('click',()=>openMemory(id,title,type,src));grid.appendChild(card);
+    });
+  }
+  function openMemory(id,title,type,src){
+    memoryMode=true;currentScene='memory';revealed=true;$('#sceneEyebrow').textContent='MEMORY '+id;$('#sceneTitle').textContent=title;$('#sceneText').textContent='';$('#revealSceneText').classList.add('hidden');$('#nextScene').innerHTML='رجوع للذكريات <b>↙</b>';
+    const holder=$('#sceneMedia');holder.replaceChildren();
+    if(type==='photo'){const img=document.createElement('img');img.src=src;img.alt=title;holder.appendChild(img)}else{const wrap=document.createElement('div');wrap.className='video-thumb';wrap.innerHTML='<span>▶</span><small>اضغطي لتشغيل الفيديو</small>';const activate=()=>{const v=document.createElement('video');v.src=src;v.controls=true;v.playsInline=true;v.preload='metadata';holder.replaceChildren(v);v.play().catch(()=>{});};wrap.addEventListener('click',activate);wrap.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});wrap.tabIndex=0;wrap.setAttribute('role','button');holder.appendChild(wrap)}
+    $('#sceneModal').classList.add('open');$('#sceneModal').setAttribute('aria-hidden','false');document.body.classList.add('cinematic');$('#closeScene').focus({preventScroll:true});
+  }
+
+  $('#startStory').addEventListener('click',()=>showScreen('passwordScreen'));
+  $('#mainPasswordForm').addEventListener('submit',e=>{e.preventDefault();const value=$('#mainPassword').value.trim().toLowerCase();if(value==='kerola'){showScreen('musicScreen');$('#mainPasswordMessage').textContent='';return;}$('#mainPasswordMessage').textContent=wrongMain[Math.min(mainTries,wrongMain.length-1)];mainTries++;$('#mainPassword').value='';$('#mainPassword').focus({preventScroll:true});});
+  $('#togglePassword').addEventListener('click',()=>{const i=$('#mainPassword');i.type=i.type==='password'?'text':'password'});
+  $('#toggleSecretPassword').addEventListener('click',()=>{const i=$('#secretPassword');i.type=i.type==='password'?'text':'password'});
+  $('#beginJourney').addEventListener('click',()=>{showScreen('universe');if(selectedSong!==null){updatePlayer(songs[selectedSong]);$('#miniPlayer').classList.remove('hidden')}setProgress();toast('الرحلة بدأت… خدي وقتك يا رولا')});
+  $('#skipMusic').addEventListener('click',()=>{selectedSong=null;$('#miniPlayer').classList.add('hidden');showScreen('universe');setProgress()});
+  $$('[data-scene]').forEach(b=>b.addEventListener('click',()=>openScene(b.dataset.scene)));
+  $('#openMemories').addEventListener('click',()=>{renderMemories();showScreen('memoriesScreen')});
+  $('#closeScene').addEventListener('click',closeScene);$$('[data-close-scene]').forEach(b=>b.addEventListener('click',closeScene));
+  $('#revealSceneText').addEventListener('click',revealScene);
+  $('#nextScene').addEventListener('click',()=>{if(memoryMode){closeScene();showScreen('memoriesScreen');return;}if(!revealed){revealScene();return;}const next=scenes[currentScene]?.next;closeScene();if(next)openScene(next)});
+  $('#pauseJourney').addEventListener('click',()=>{paused=!paused;document.body.classList.toggle('paused',paused);$('#pauseJourney').textContent=paused?'▶':'Ⅱ';$('#pauseJourney').setAttribute('aria-label',paused?'استئناف الحركة':'إيقاف الحركة');toast(paused?'الحركة اتوقفت مؤقتًا':'رجعنا نتحرك')});
+  $('#secretMoon').addEventListener('click',()=>{secretTries=0;$('#secretPasswordMessage').textContent='';$('#secretPassword').value='';showScreen('secretScreen')});
+  $('#secretPasswordForm').addEventListener('submit',e=>{e.preventDefault();const value=$('#secretPassword').value.trim().toLowerCase();if(value==='rolaa'){showScreen('secretReveal');return;}$('#secretPasswordMessage').textContent=wrongSecret[Math.min(secretTries,wrongSecret.length-1)];secretTries++;$('#secretPassword').value='';$('#secretPassword').focus({preventScroll:true});});
+  $('#enterPranks').addEventListener('click',()=>showScreen('pranksScreen'));
+  $$('[data-back]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.back)));
+  $('#miniPlay').addEventListener('click',()=>{if(selectedSong===null){showScreen('musicScreen');toast('اختاري أغنية الأول');return;}if(availableSongs.has(selectedSong)){if(audio.paused)playSong(selectedSong);else audio.pause()}else playSong(selectedSong)});
+  $('#expandPlayer').addEventListener('click',()=>$('#playlistSheet').classList.toggle('hidden'));$('#closePlaylist').addEventListener('click',()=>$('#playlistSheet').classList.add('hidden'));
+  $('#soundToggle').addEventListener('click',()=>{soundEnabled=!soundEnabled;document.body.classList.toggle('quiet',!soundEnabled);$('#soundToggle').textContent=soundEnabled?'♫':'♪';$('#soundToggle').setAttribute('aria-label',soundEnabled?'إيقاف المؤثرات':'تفعيل المؤثرات')});
+  audio.addEventListener('play',()=>$('#miniPlay').textContent='Ⅱ');audio.addEventListener('pause',()=>$('#miniPlay').textContent='▶');audio.addEventListener('timeupdate',()=>{if(audio.duration)$('#fakeProgress').style.width=(audio.currentTime/audio.duration*100)+'%'});audio.addEventListener('ended',()=>{const next=currentAudio+1;if(next<songs.length&&availableSongs.has(next))playSong(next);else toast('خلصت الأغنية. تقدري تختاري غيرها من القائمة.')});
+  // Decorative star dust is CSS-only; it cannot intercept taps or launch media.
+  const stars=$('#stars');for(let i=0;i<26;i++){const star=document.createElement('i');star.className='dust';star.style.left=((i*37)%97)+'%';star.style.top=((i*61+9)%95)+'%';star.style.animationDelay=((i%11)*-.7)+'s';stars.appendChild(star)}
+  buildSongs();setProgress();renderMemories();
 })();

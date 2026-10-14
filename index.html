@@ -2,63 +2,61 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#080d27"><meta name="description" content="KEROLA — عالم صغير اتعمل مخصوص لرولا، بين القمر والذكريات والأغاني.">
-  <title>KEROLA — our little universe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#080914"><meta name="description" content="A little universe made for Rola.">
+  <title>KEROLA — our little universe</title><link rel="preload" href="assets/photos/28.webp" as="image"><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="sky" aria-hidden="true"><div class="nebula nebula-a"></div><div class="nebula nebula-b"></div><div class="moon-orb"><span></span></div><div class="cloud cloud-a"></div><div class="cloud cloud-b"></div><canvas id="starCanvas"></canvas></div>
-  <div class="grain" aria-hidden="true"></div>
+  <div class="ambient" aria-hidden="true"><div class="nebula n1"></div><div class="nebula n2"></div><div class="stars" id="stars"></div></div>
+  <header class="topline"><span class="brand-mark">K<span>✦</span></span><span class="top-note">A LITTLE UNIVERSE, JUST FOR YOU</span><button id="soundToggle" class="icon-btn" aria-label="إيقاف المؤثرات" title="إيقاف المؤثرات">♫</button></header>
 
-  <main id="app">
-    <section id="intro" class="screen intro-screen active">
-      <div class="intro-glow"></div>
-      <div class="intro-copy"><span class="eyebrow">A LITTLE UNIVERSE · MADE FOR YOU</span><h1>KER<span>O</span>LA</h1><p>في حاجات حلوة… تستاهل تتفتح براحة.</p></div>
-      <button id="openEnvelope" class="envelope-wrap" aria-label="افتحي الظرف">
-        <div class="envelope-shadow"></div><div class="envelope-back"></div><div class="letter-peek"><span>إلى رولا،</span><small>في مكان صغير مستنيكي…</small></div><div class="envelope-front"></div><div class="envelope-flap"></div><div class="envelope-seal">✦</div><span class="open-label">OPEN ME</span>
-      </button>
-      <p class="intro-foot">take your time · no rush</p>
+  <main>
+    <section id="welcome" class="screen active welcome-screen" aria-labelledby="welcomeTitle">
+      <div class="welcome-orbit" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="moon-hero"><span></span></div><i class="spark s1">✦</i><i class="spark s2">✧</i><i class="spark s3">✦</i></div>
+      <p class="eyebrow">SOME THINGS DESERVE THEIR OWN SKY</p>
+      <h1 id="welcomeTitle">في حكاية<br><em>مستنياكي</em></h1>
+      <p class="welcome-copy">مش موقع تتفرجي عليه وخلاص… دي حكاية صغيرة، متخبّية بين النجوم، معمولة عشانك إنتِ.</p>
+      <button id="startStory" class="primary-btn"><span>ابدئي الحكاية</span><b>↙</b></button>
+      <p class="micro-note">خدي نفس… وادخلي براحتك</p>
     </section>
 
-    <section id="passwordScreen" class="screen paper-screen">
-      <div class="paper-card"><span class="paper-stamp">FOR R.</span><span class="eyebrow">BEFORE WE BEGIN</span><h2>لسه فاكرة المفتاح؟</h2><p>في حاجات مش بتتفتح غير بحاجة محدش يعرفها غيرك.</p>
-        <form id="mainPasswordForm"><label class="sr-only" for="mainPassword">كلمة السر</label><input id="mainPassword" type="password" autocomplete="off" placeholder="اكتبي الباسورد هنا" required><button class="pill-button dark" type="submit">افتحي الباب <span>↗</span></button></form>
-        <p id="mainPasswordMessage" class="form-message" aria-live="polite"></p><div class="paper-footer">one memory at a time <span>♡</span></div>
-      </div>
+    <section id="passwordScreen" class="screen center-screen" aria-labelledby="passwordTitle">
+      <div class="small-moon" aria-hidden="true">☾</div><p class="eyebrow">THE FIRST LITTLE SECRET</p><h2 id="passwordTitle">في باب صغير هنا</h2><p class="muted">ومفتاحه حاجة إحنا بس عارفينها.</p>
+      <form id="mainPasswordForm" class="password-form"><label for="mainPassword">كلمة السر</label><div class="input-wrap"><input id="mainPassword" type="password" placeholder="اكتبي المفتاح هنا" autocomplete="off" autocapitalize="none" required><button id="togglePassword" type="button" aria-label="إظهار كلمة السر">◉</button></div><button class="primary-btn full" type="submit">افتحي الباب <b>↙</b></button><p id="mainPasswordMessage" class="message" aria-live="polite"></p></form>
+      <button class="text-btn back-btn" data-back="welcome">رجوع</button>
     </section>
 
-    <section id="musicScreen" class="screen music-screen">
-      <div class="screen-heading"><span class="eyebrow">CHOOSE YOUR SOUNDTRACK</span><h2>اختاري صوت الرحلة</h2><p>كل أغنية ليها إحساس… اختاري اللي تحبي تبدأي بيه.</p></div>
+    <section id="musicScreen" class="screen music-screen" aria-labelledby="musicTitle">
+      <p class="eyebrow">BEFORE WE BEGIN</p><h2 id="musicTitle">اختاري صوت الحكاية</h2><p class="muted">اختاري أغنية بتحبيها، أو ابدئي من غير موسيقى. لو ملف الأغنية مش موجود، تقدري تفتحي نتائج الاستماع.</p>
       <div id="songGrid" class="song-grid"></div>
-      <div class="music-bottom"><p id="songHint">اختاري أغنية لو حابة، أو ابدئي الرحلة من غير موسيقى.</p><button id="beginJourney" class="pill-button">ابدئي الرحلة حتى من غير أغنية <span>✦</span></button></div>
+      <div class="music-actions"><button id="beginJourney" class="primary-btn"><span>ندخل عالمنا</span><b>↙</b></button><button id="skipMusic" class="text-btn">من غير موسيقى</button></div>
     </section>
 
-    <section id="universe" class="screen universe-screen">
-      <header class="topbar" id="topbar"><a class="brand-mark" href="#" aria-label="KEROLA">K<span>✦</span></a><div class="journey-progress"><span id="chapterName">OUR UNIVERSE</span><div class="progress-line"><i id="progressFill"></i></div></div><button id="pauseJourney" class="icon-button" aria-label="إيقاف الحركة مؤقتًا" title="إيقاف الحركة مؤقتًا">Ⅱ</button></header>
-      <div class="universe-content">
-        <div class="hero-copy"><span class="eyebrow" id="heroEyebrow">CHAPTER I · OUR UNIVERSE</span><h2 id="heroTitle">كل نجمة هنا<br><em>وراها حكاية.</em></h2><p id="heroText">مش لازم تفتكري كل حاجة مرة واحدة… امشي ورا النور، وكل ما تلمسي نجمة هتلاقي ذكرى مستنياكي.</p><button id="followLight" class="pill-button">اتبعي النور <span>↗</span></button></div>
-        <div class="orbit-scene" id="orbitScene"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-moon"></div><button class="orbit-star star-one" data-scene="beginning" aria-label="البداية"><span>✦</span></button><button class="orbit-star star-two" data-scene="littleThings" aria-label="التفاصيل الصغيرة"><span>✦</span></button><button class="orbit-star star-three" data-scene="frames" aria-label="الصور"><span>✦</span></button><button class="orbit-star star-four" data-scene="unsaid" aria-label="الرسائل"><span>✦</span></button><button class="orbit-star star-five" data-scene="sunMoon" aria-label="الشمس والقمر"><span>✦</span></button><button class="orbit-star star-six" data-scene="lastLetter" aria-label="الرسالة الأخيرة"><span>✦</span></button><div class="orbit-caption">TOUCH A STAR TO FIND A MEMORY</div></div>
+    <section id="universe" class="screen universe-screen" aria-labelledby="universeTitle">
+      <div class="universe-head"><p class="eyebrow">WELCOME TO OUR LITTLE UNIVERSE</p><h2 id="universeTitle">أهلًا بيكي في <em>عالمنا</em></h2><p>كل نجمة هنا وراها حكاية… اختاري واحدة وخلّيها تنور.</p></div>
+      <div class="sky-stage"><div class="big-moon" aria-hidden="true"><span></span></div><div class="constellation-line" aria-hidden="true"></div>
+        <button class="star-point star-one" data-scene="beginning"><i>✦</i><span>البداية</span></button>
+        <button class="star-point star-two" data-scene="littleThings"><i>✧</i><span>التفاصيل</span></button>
+        <button class="star-point star-three" data-scene="frames"><i>✦</i><span>الصور</span></button>
+        <button class="star-point star-four" data-scene="unsaid"><i>✧</i><span>اللي متقالش</span></button>
+        <button class="star-point star-five" data-scene="sunMoon"><i>✦</i><span>الشمس والقمر</span></button>
+        <button class="star-point star-six" data-scene="lastLetter"><i>✧</i><span>آخر رسالة</span></button>
+        <button id="secretMoon" class="secret-moon" aria-label="قمر سري"><span>☾</span><small>؟</small></button>
       </div>
-      <nav class="bottom-nav"><button class="nav-item selected" data-tab="journey"><span>✧</span> الرحلة</button><button class="nav-item" data-tab="memories"><span>▧</span> الذكريات</button><button class="nav-item" data-tab="map"><span>⌘</span> خريطة النجوم</button></nav>
-      <div id="panel" class="panel hidden"><div class="panel-head"><div><span class="eyebrow" id="panelEyebrow">MEMORY ARCHIVE</span><h3 id="panelTitle">ذكرياتنا</h3></div><button id="closePanel" class="icon-button" aria-label="إغلاق">×</button></div><div id="panelBody"></div></div>
-      <button id="secretMoon" class="secret-moon" aria-label="سر صغير">☾<span></span></button>
+      <div class="universe-bottom"><div class="progress-wrap"><span>رحلتنا</span><div class="progress-track"><i id="progressFill"></i></div><span id="progressLabel">0 / 6</span></div><div class="nav-actions"><button id="openMemories" class="secondary-btn">أرشيف الذكريات <span>✧</span></button><button id="pauseJourney" class="icon-btn" aria-label="إيقاف الحركة">Ⅱ</button></div></div>
     </section>
 
-    <section id="secretScreen" class="screen secret-screen">
-      <button class="back-link" id="backFromSecret">← رجوع للسماء</button><div class="secret-card"><div class="secret-moon-large">☾</div><span class="eyebrow">A LITTLE SECRET, ROLA</span><h2>دي حاجة تانية خالص…</h2><p>لو وصلتي لهنا، جربي تفتكري الباسورد.</p><form id="secretPasswordForm"><input id="secretPassword" type="password" placeholder="الباسورد السري" autocomplete="off" required><button class="pill-button" type="submit">نجرب <span>↗</span></button></form><p id="secretPasswordMessage" class="form-message" aria-live="polite"></p></div>
-    </section>
-
-    <section id="secretReveal" class="screen secret-reveal"><div class="blur-wash"></div><div class="reveal-card"><span class="eyebrow">JUST FOR YOU</span><p class="reveal-message">انا مين بنت هحبها قدك يا قمر<br>انتي اكتر بنت انا شايفها جميله ورقيقه وراقيه وشاطره وحلوه..اه بقره احيانا مش بتفكري بس انا كمان بعند فادينا بنشيل بعض<br>المهم اني بحبك قوي قوي يا اغلي من اغلي حاجه عندي ربنا يخليكي ليا لاخر الدنيا 🫀✨<br><br>بس ده مش معناه ان اللي انتي داخلاله ده هيعجبك 🙂</p><button id="enterPranks" class="pill-button green">دخول <span>↗</span></button></div></section>
-
-    <section id="pranksScreen" class="screen pranks-screen"><button class="back-link" id="backFromPranks">← رجوع للسماء</button><div class="pranks-placeholder"><span class="eyebrow">THE HIDDEN ROOM</span><h2>غرفة التغفيلات</h2><p>المكان متجهز في تصميم المشروع، لكن محتوى التغفيلات نفسه لسه مستني الملف اللي هتبعته.</p><div class="locked-mark">✦ <span>COMING WHEN THE MEMORIES ARE READY</span></div></div></section>
+    <section id="memoriesScreen" class="screen memories-screen" aria-labelledby="memoriesTitle"><div class="section-head"><button class="icon-btn" data-back="universe" aria-label="رجوع">↗</button><div><p class="eyebrow">MEMORY ARCHIVE</p><h2 id="memoriesTitle">حاجات لسه عايشة</h2></div></div><p class="muted">كل كارت بيفتح لوحده. الفيديو مش هيشتغل غير لما تختاريه بنفسك.</p><div id="memoryGrid" class="memory-grid"></div></section>
   </main>
 
-  <div id="sceneModal" class="scene-modal" aria-hidden="true"><div class="scene-backdrop"></div><div class="scene-window"><button id="closeScene" class="icon-button close-scene" aria-label="إغلاق المشهد">×</button><div class="scene-media" id="sceneMedia"></div><div class="scene-copy"><span class="eyebrow" id="sceneEyebrow">A MEMORY</span><h2 id="sceneTitle"></h2><p id="sceneText"></p><div id="sceneExtra"></div><div class="scene-actions"><button id="revealSceneText" class="pill-button subtle-button">افتحي الذكرى <span>✧</span></button><button id="nextScene" class="pill-button">كمّلي <span>↗</span></button></div></div></div></div>
+  <section id="sceneModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sceneTitle"><div class="modal-backdrop" data-close-scene></div><article class="scene-card"><button id="closeScene" class="icon-btn close-btn" aria-label="إغلاق">×</button><p id="sceneEyebrow" class="eyebrow">THE BEGINNING</p><h2 id="sceneTitle">كل حاجة بدأت من تفصيلة</h2><div id="sceneMedia" class="scene-media"></div><p id="sceneText" class="scene-text"></p><div class="scene-actions"><button id="revealSceneText" class="secondary-btn">افتحي الذكرى ✧</button><button id="nextScene" class="primary-btn">كمّلي <b>↙</b></button></div></article></section>
 
-  <div id="toast" class="toast" role="status"></div>
-  <div id="miniPlayer" class="mini-player hidden"><button id="miniPlay" class="player-play" aria-label="تشغيل أو إيقاف">▶</button><div class="player-track"><strong id="nowPlaying">اختاري أغنية</strong><small id="playerArtist">KEROLA soundtrack</small><div class="fake-progress"><i id="fakeProgress"></i></div></div><button id="expandPlayer" class="player-more" aria-label="فتح قائمة الأغاني">⌃</button></div>
-  <div id="playlistSheet" class="playlist-sheet hidden"><div class="sheet-head"><div><span class="eyebrow">YOUR SOUNDTRACK</span><h3>الأغاني</h3></div><button id="closePlaylist" class="icon-button" aria-label="إغلاق القائمة">×</button></div><div id="playlistRows"></div><p class="music-note">للتشغيل داخل الموقع، ضعي ملفات الصوت المصرّح باستخدامها داخل <code>assets/audio/</code> بأسماء الملفات الموضحة في README. حاليًا زر الأغنية يفتح صفحة بحث للاستماع إليها.</p></div>
-  <script src="app.js"></script>
+  <section id="secretScreen" class="screen secret-screen" aria-labelledby="secretTitle"><div class="secret-symbol">☾</div><p class="eyebrow">A SECRET BEHIND THE MOON</p><h2 id="secretTitle">لقيتي القمر المخبي</h2><p class="muted">بس لسه محتاج كلمة السر الصح.</p><form id="secretPasswordForm" class="password-form"><label for="secretPassword">الكلمة السرية</label><div class="input-wrap"><input id="secretPassword" type="password" placeholder="جربي تفتكري" autocomplete="off" required><button id="toggleSecretPassword" type="button" aria-label="إظهار كلمة السر">◉</button></div><button class="primary-btn full" type="submit">كمّلي <b>↙</b></button><p id="secretPasswordMessage" class="message" aria-live="polite"></p></form><button class="text-btn" data-back="universe">ارجعي للنجوم</button></section>
+  <section id="secretReveal" class="screen secret-reveal center-screen"><div class="secret-symbol">☾</div><p class="eyebrow">JUST BETWEEN US</p><h2>كنت عارف إنك هتوصلي</h2><p class="secret-copy">في حاجات صغيرة بنخبيها مش عشان بعيدة… عشان تبقى أحلى لما نلاقيها.</p><button id="enterPranks" class="primary-btn green-btn">دخول <b>↙</b></button><button class="text-btn" data-back="universe">مش دلوقتي</button></section>
+  <section id="pranksScreen" class="screen center-screen prank-screen"><p class="eyebrow">HIDDEN ROOM</p><h2>الغرفة السرية</h2><p class="muted">المكان جاهز، ومستني المحتوى الخاص بيه لما تحدد النص أو المفاجأة اللي عايزها هنا.</p><button class="primary-btn" data-back="universe">ارجعي لعالمنا <b>↙</b></button></section>
+
+  <aside id="miniPlayer" class="mini-player hidden"><button id="miniPlay" aria-label="تشغيل أو إيقاف">▶</button><div class="mini-info"><strong id="nowPlaying">اختاري أغنية</strong><small id="playerArtist">KEROLA soundtrack</small><div class="mini-progress"><i id="fakeProgress"></i></div></div><button id="expandPlayer" aria-label="قائمة الأغاني">☷</button></aside>
+  <aside id="playlistSheet" class="playlist-sheet hidden"><div class="sheet-head"><div><p class="eyebrow">SOUNDTRACK</p><strong>أغاني الحكاية</strong></div><button id="closePlaylist" class="icon-btn" aria-label="إغلاق القائمة">×</button></div><div id="playlistRows"></div></aside>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer><span>MADE OF LITTLE THINGS</span><span>✦ KEROLA ✦</span></footer>
+  <script src="app.js" defer></script>
 </body></html>
