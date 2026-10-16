@@ -53,11 +53,5 @@ $$('.filter').forEach(b=>b.addEventListener('click',()=>{activeFilter=b.dataset.
 $('#viewerClose').addEventListener('click',closeViewer);$('#viewerPrev').addEventListener('click',()=>moveViewer(-1));$('#viewerNext').addEventListener('click',()=>moveViewer(1));$('#viewer').addEventListener('click',e=>{if(e.target===$('#viewer'))closeViewer()});document.addEventListener('keydown',e=>{if($('#viewer').hidden)return;if(e.key==='Escape')closeViewer();if(e.key==='ArrowLeft')moveViewer(1);if(e.key==='ArrowRight')moveViewer(-1)});
 $('#restartJourney').addEventListener('click',()=>{showScreen('home')});$('#secretMoon').addEventListener('click',()=>{secretTries=0;$('#secretPasswordMessage').textContent='';$('#secretPassword').value='';showScreen('secretScreen')});$('#backFromSecret').addEventListener('click',()=>showScreen('journalScreen'));
 $('#secretPasswordForm').addEventListener('submit',e=>{e.preventDefault();if($('#secretPassword').value.trim().toLowerCase()==='rolaa'){showScreen('secretReveal');return}$('#secretPasswordMessage').textContent=wrongSecret[Math.min(secretTries,wrongSecret.length-1)];secretTries++;$('#secretPassword').value='';});$('#enterPranks').addEventListener('click',()=>showScreen('pranksScreen'));$('#backFromPranks').addEventListener('click',()=>showScreen('journalScreen'));
-// Touch gestures make the memory viewer feel like a little story, not a static gallery.
-let touchStartX=0,touchStartY=0;
-$('#viewer').addEventListener('touchstart',e=>{if(!e.touches||!e.touches[0])return;touchStartX=e.touches[0].clientX;touchStartY=e.touches[0].clientY},{passive:true});
-$('#viewer').addEventListener('touchend',e=>{if(!e.changedTouches||!e.changedTouches[0])return;const dx=e.changedTouches[0].clientX-touchStartX;const dy=e.changedTouches[0].clientY-touchStartY;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.25)moveViewer(dx<0?1:-1)},{passive:true});
-// Prevent a missing thumbnail from breaking the rest of the story.
-document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && !e.target.dataset.fallback){e.target.dataset.fallback='1';e.target.style.background='linear-gradient(135deg,#f5dce6,#fff8fa)';e.target.alt=e.target.alt||'ذكرى من حكايتنا'}},true);
 renderSongs();renderMemories();
 })();
